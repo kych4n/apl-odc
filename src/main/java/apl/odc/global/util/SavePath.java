@@ -5,7 +5,9 @@ import lombok.Getter;
 @Getter
 public enum SavePath {
     ORIGINAL("src/main/resources/data/original_data.csv"),
-    FILTERED("src/main/resources/data/filtered_data.csv");
+    FILTERED("src/main/resources/data/filtered_data.csv"),
+    FRAME("C:/filtering/src/main/java/apl/filtering/frame"),
+    RULE("C:/filtering/src/main/resources/rules");
 
     private final String path;
 
