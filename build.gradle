@@ -46,6 +46,9 @@ dependencies {
 
     // OTP
     implementation 'com.warrenstrange:googleauth:1.5.0'
+
+    // openCSV
+    implementation 'com.opencsv:opencsv:5.9'
 }
 
 tasks.named('test') {
