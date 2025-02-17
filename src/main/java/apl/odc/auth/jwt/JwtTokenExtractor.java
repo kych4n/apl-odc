@@ -2,7 +2,7 @@ package apl.odc.auth.jwt;
 
 import apl.odc.domain.acp.constant.Authority;
 import io.jsonwebtoken.Jwts;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -24,13 +24,15 @@ public class JwtTokenExtractor {
     }
 
     public List<Authority> getAuthorities(String token) {
-        return Arrays.stream(Jwts.parser()
-                        .verifyWith(keyProvider.getKeyFromString(jwtProperties.secretKey()))
-                        .build()
-                        .parseSignedClaims(token)
-                        .getPayload()
-                        .get("authorities", String[].class))
-                .map(Authority::valueOf).toList();
+        return Jwts.parser()
+                .verifyWith(keyProvider.getKeyFromString(jwtProperties.secretKey()))
+                .build()
+                .parseSignedClaims(token)
+                .getPayload()
+                .get("authorities", ArrayList.class)
+                .stream()
+                .map(authority -> Authority.valueOf((String) authority))
+                .toList();
     }
 
 }
