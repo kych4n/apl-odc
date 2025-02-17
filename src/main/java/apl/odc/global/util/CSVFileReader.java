@@ -17,7 +17,7 @@ public class CSVFileReader {
     private final List<String> header;
 
     public CSVFileReader() throws IOException, CsvValidationException {
-        this.csvReader = new CSVReader(new FileReader(DataPath.ORIGINAL.getPath()));
+        this.csvReader = new CSVReader(new FileReader(SavePath.ORIGINAL.getPath()));
         this.header = Arrays.asList(csvReader.readNext());
     }
 
