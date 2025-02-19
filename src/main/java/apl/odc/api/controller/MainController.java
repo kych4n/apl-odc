@@ -34,12 +34,13 @@ public class MainController {
         return ApiResponseUtil.success(SuccessMessage.SUCCESS, attributes);
     }
 
-    @Permission(value = {Authority.READ})
+    @Permission(value = {Authority.READ, Authority.CREATE})
     @PostMapping
-    public ResponseEntity<BaseResponse<?>> prepareForFiltering(
+    public ResponseEntity<BaseResponse<?>> getFilteredData(
             @RequestBody @Validated InfoForFilteringRequest infoForFilteringRequest) throws IOException {
         mainFacade.prepareForFiltering(infoForFilteringRequest);
-        return ApiResponseUtil.success(SuccessMessage.SUCCESS);
+        mainFacade.filter();
+        return ApiResponseUtil.success(SuccessMessage.CREATED);
     }
 
 }
