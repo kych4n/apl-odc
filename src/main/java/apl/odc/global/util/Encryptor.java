@@ -38,9 +38,9 @@ public class Encryptor {
         }
     }
 
-    public SecretKey generateKey(Long userId) throws NoSuchAlgorithmException {
+    public SecretKey generateKey(String seed) throws NoSuchAlgorithmException {
         MessageDigest sha = MessageDigest.getInstance("SHA-256");
-        byte[] key = sha.digest(userId.toString().getBytes(StandardCharsets.UTF_8));
+        byte[] key = sha.digest(seed.getBytes(StandardCharsets.UTF_8));
 
         return new SecretKeySpec(Arrays.copyOf(key, 16), "AES");
     }

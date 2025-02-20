@@ -29,7 +29,7 @@ public class SignInService {
         User user = userRepository.findByUsernameAndPassword(signInRequest.username(), signInRequest.password())
                 .orElseThrow(NotFoundException::wrong);
 
-        if (!otpHandler.verifyTotp(user.getSecretKey(), signInRequest.totp())) {
+        if (!otpHandler.verifyTotp(user.getSeed(), signInRequest.totp())) {
             throw UnauthorizedException.wrong();
         }
 
