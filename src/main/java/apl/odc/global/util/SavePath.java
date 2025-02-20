@@ -6,6 +6,7 @@ import lombok.Getter;
 public enum SavePath {
     ORIGINAL("/app/data/original_data.csv"),
     FILTERED("/app/data/filtered_data.csv"),
+    ENCRYPTED("/app/data/encrypted_data.aes"),
     FRAME("/app/filtering/src/main/java/apl/filtering/frame"),
     RULE("/app/filtering/src/main/resources/rules"),
     JSON("/app/data/mappingInfo.json"),
