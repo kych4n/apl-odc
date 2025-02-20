@@ -12,20 +12,20 @@ public class OtpHandler {
 
     private final GoogleAuthenticator gAuth = new GoogleAuthenticator();
 
-    public GoogleAuthenticatorKey generateSecretKey() {
+    public GoogleAuthenticatorKey generateSeed() {
         return gAuth.createCredentials();
     }
 
-    public String generateTotpAuthUrl(String issuer, String accountName, GoogleAuthenticatorKey key) {
-        return GoogleAuthenticatorQRGenerator.getOtpAuthURL(issuer, accountName, key);
+    public String generateTotpAuthUrl(String issuer, String accountName, GoogleAuthenticatorKey seed) {
+        return GoogleAuthenticatorQRGenerator.getOtpAuthURL(issuer, accountName, seed);
     }
 
-    public int getTotp(String secretKey) {
-        return gAuth.getTotpPassword(secretKey);
+    public int getTotp(String seed) {
+        return gAuth.getTotpPassword(seed);
     }
 
-    public boolean verifyTotp(String secretKey, int totp) {
-        return gAuth.authorize(secretKey, totp);
+    public boolean verifyTotp(String seed, int totp) {
+        return gAuth.authorize(seed, totp);
     }
 
 }

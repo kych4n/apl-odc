@@ -37,8 +37,8 @@ public class User {
     @Column(name = "refresh_token")
     private String refreshToken;
 
-    @Column(name = "secret_key", nullable = false)
-    private String secretKey;
+    @Column(name = "seed", nullable = false)
+    private String seed;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ACP> ACPs = new ArrayList<>();
