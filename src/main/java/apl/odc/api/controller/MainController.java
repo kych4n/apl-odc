@@ -1,14 +1,15 @@
 package apl.odc.api.controller;
 
 import apl.odc.annotation.Permission;
+import apl.odc.annotation.UserId;
 import apl.odc.api.dto.request.InfoForFilteringRequest;
 import apl.odc.api.dto.response.AttributeResponse;
+import apl.odc.api.dto.response.SignedUrlResponse;
 import apl.odc.api.facade.MainFacade;
 import apl.odc.domain.acp.constant.Authority;
 import apl.odc.global.common.BaseResponse;
 import apl.odc.global.message.SuccessMessage;
 import apl.odc.global.util.ApiResponseUtil;
-import java.io.IOException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -36,11 +37,14 @@ public class MainController {
 
     @Permission(value = {Authority.READ, Authority.CREATE})
     @PostMapping
-    public ResponseEntity<BaseResponse<?>> getFilteredData(
-            @RequestBody @Validated InfoForFilteringRequest infoForFilteringRequest) throws IOException {
+    public ResponseEntity<BaseResponse<?>> getEncryptedData(
+            @RequestBody @Validated InfoForFilteringRequest infoForFilteringRequest, @UserId Long userId)
+            throws Exception {
         mainFacade.prepareForFiltering(infoForFilteringRequest);
         mainFacade.filter();
-        return ApiResponseUtil.success(SuccessMessage.CREATED);
+        mainFacade.encrypt(userId);
+        SignedUrlResponse signedUrl = mainFacade.getSignedUrl();
+        return ApiResponseUtil.success(SuccessMessage.SUCCESS, signedUrl);
     }
 
 }
