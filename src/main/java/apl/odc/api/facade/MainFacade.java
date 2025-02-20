@@ -4,6 +4,7 @@ import apl.odc.api.dto.request.InfoForFilteringRequest;
 import apl.odc.api.dto.request.MappingInfoDTO;
 import apl.odc.api.dto.response.AttributeResponse;
 import apl.odc.api.dto.response.SignedUrlResponse;
+import apl.odc.domain.user.application.UserService;
 import apl.odc.global.util.CSVFileReader;
 import apl.odc.global.util.Encryptor;
 import apl.odc.global.util.FileDownloader;
@@ -27,6 +28,7 @@ public class MainFacade {
     private final FileDownloader fileDownloader;
     private final S3Handler s3Handler;
     private final Encryptor encryptor;
+    private final UserService userService;
 
     public AttributeResponse getAttributes() {
         List<String> header = csvFileReader.getHeader();
@@ -74,7 +76,8 @@ public class MainFacade {
     }
 
     public void encrypt(Long userId) throws Exception {
-        SecretKey secretKey = encryptor.generateKey(userId);
+        String seed = userService.find(userId).getSeed();
+        SecretKey secretKey = encryptor.generateKey(seed);
         encryptor.encrypt(secretKey);
     }
 
