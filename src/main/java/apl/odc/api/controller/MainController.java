@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -45,6 +46,13 @@ public class MainController {
         mainFacade.encrypt(userId);
         SignedUrlResponse signedUrl = mainFacade.getSignedUrl();
         return ApiResponseUtil.success(SuccessMessage.SUCCESS, signedUrl);
+    }
+
+    @Permission(value = {Authority.READ, Authority.CREATE})
+    @DeleteMapping
+    public ResponseEntity<BaseResponse<?>> removeData() {
+        mainFacade.remove();
+        return ApiResponseUtil.success(SuccessMessage.DELETED);
     }
 
 }

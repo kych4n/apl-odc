@@ -38,4 +38,10 @@ public class S3Handler {
         return s3Operations.createSignedGetURL(s3Properties.bucketName(), s3Properties.dataKey(), duration);
     }
 
+    public void remove() {
+        if (s3Operations.objectExists(s3Properties.bucketName(), s3Properties.dataKey())) {
+            s3Operations.deleteObject(s3Properties.bucketName(), s3Properties.dataKey());
+        }
+    }
+
 }

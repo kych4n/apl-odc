@@ -86,4 +86,7 @@ public class MainFacade {
         return SignedUrlResponse.of(s3Handler.getSignedGetUrl());
     }
 
+    public void remove() {
+        s3Handler.remove();
+    }
 }
